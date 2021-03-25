@@ -7,6 +7,11 @@ obtained by periodically running something like
 
     ./librespeed-cli --json --telemetry-level disabled' | tail -n 1 | awk '{$1=$1};1' | jq -c -M '. + {"source":"myhouse"}' >> speeds.jsonl
 
+(You may want to specify what server `librespeed-cli` should use with
+`--server <x>` where the ID comes from `./librespeed-cli --list`, so
+you're not measuring apples and oranges. Note that setting the server
+in a cron job is fragile, should the list of servers change.)
+
 You can concatenate such files from multiple sources into a single
 file, then specify its location in `.env` along with `FLASK_APP`:
 
