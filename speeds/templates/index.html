@@ -15,23 +15,23 @@
 	  data: {
               datasets: [
               {%- for location in objects -%}
-              {%- for direction in ['upload', 'download'] -%}
+		  {%- for direction in ['upload', 'download'] -%}
                   {
                       label: "{{ location + ' ' + direction }}",
                       backgroundColor: "{{ colors[location][direction] }}",
 		      borderColor: "{{ colors[location][direction] }}",
 		      fill: false,
-                      data:               [
-                  {%- for item in objects[location] -%}
-                  {
-                      x: "{{ item['timestamp'] }}",
-                      y: {{ item[direction] }}
+                      data: [
+			  {%- for item in objects[location] -%}
+			  {
+			      x: "{{ item['timestamp'] }}",
+			      y: {{ item[direction] }},
+			      server: "{{ item['server']['name'] }}"
+			  },
+			  {% endfor %}
+		      ],
                   },
-                  {% endfor %}
-              ],
-
-                  },
-              {%- endfor -%}
+		  {%- endfor -%}
               {%- endfor -%}
               ],
           },
@@ -42,8 +42,13 @@
                   text: 'Speeds'
               },
               tooltips: {
-                  mode: 'index',
-                  intersect: false,
+		  callbacks: {
+		      afterLabel: function(tooltipItem, data) {
+			  var dataset = data['datasets'][tooltipItem['datasetIndex']];
+			  var server = dataset['data'][tooltipItem['index']]['server']
+			  return "server: " + server;
+		      }
+		  }
               },
               hover: {
                   mode: 'nearest',
@@ -54,7 +59,8 @@
                       display: true,
 		      type: 'time',
 		      time: {
-                          unit: 'day'
+                          unit: 'day',
+			  tooltipFormat:'ddd HH:mm',
                       },
                   }],
                   yAxes: [{
