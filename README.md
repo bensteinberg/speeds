@@ -2,8 +2,8 @@ speeds
 ======
 
 This is a Flask application for serving a graph of cable modem
-speeds. The data source is JSON Lines, obtained by periodically
-running something like
+speeds. The data source is [JSON Lines](https://jsonlines.org/),
+obtained by periodically running something like
 
     ./librespeed-cli --json --telemetry-level disabled' | tail -n 1 | awk '{$1=$1};1' | jq -c -M '. + {"source":"myhouse"}' >> speeds.jsonl
 
