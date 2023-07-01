@@ -29,7 +29,8 @@ you should be able to run
 and see the graph at http://127.0.0.1:5000/
 
 It defaults to showing one month of data, but you can use `all` or
-an integer in the URL to see a different range.
+an integer in the URL to see a different number of months, or a range
+of dates in the form `YYYYMMDD-YYYYMMDD`.
 
 Tools
 -----
