@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "speeds"
-version = "0.1.1"
+version = "0.1.2"
 description = "A small program for graphing cable modem speeds"
 authors = ["Ben Steinberg <bsteinberg@law.harvard.edu>"]
 license = "GPL-3.0-only"
 
 [tool.poetry.dependencies]
-python = "^3.7"
-Flask = "^1.1.2"
+python = "^3.9"
+flask = "^2.3.2"
 jsonlines = "^2.0.0"
 python-dotenv = "^0.15.0"
 
