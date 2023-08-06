@@ -62,6 +62,11 @@ def interval(start, end):
 def graph(objects):
     """ Produce output """
     locations = set([o['source'] for o in objects])
+
+    # assume that the most common server is "the" server
+    targets = [o['server']['name'] for o in objects]
+    target = max(set(targets), key=targets.count) if targets else ''
+
     output = {}
     colors = {}
     # we need as many pairs as we have locations; some kind of
@@ -76,7 +81,8 @@ def graph(objects):
         colors[loc] = {'download': palette[idx][0],
                        'upload': palette[idx][1]}
         output[loc] = [o for o in objects if o['source'] == loc]
-    return render_template('index.html', objects=output, colors=colors)
+    return render_template('index.html',
+                           objects=output, colors=colors, target=target)
 
 
 def ts_dt(ts):
