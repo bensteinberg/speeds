@@ -5,7 +5,7 @@ This is a Flask application for serving a graph of cable modem
 speeds. The data source is [JSON Lines](https://jsonlines.org/),
 obtained by periodically running something like
 
-    ./librespeed-cli --json --telemetry-level disabled' | tail -n 1 | awk '{$1=$1};1' | jq -c -M '. + {"source":"myhouse"}' >> speeds.jsonl
+    ./librespeed-cli --json --telemetry-level disabled' | tail -n 1 | awk '{$1=$1};1' | jq -c -M '.[0] + {"source":"myhouse"}' >> speeds.jsonl
 
 (You may want to specify what server `librespeed-cli` should use with
 `--server <x>` where the ID comes from `./librespeed-cli --list`, so
