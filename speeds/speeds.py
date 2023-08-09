@@ -77,7 +77,7 @@ def graph(objects):
         ('black', 'gray'),
     ]
     assert len(locations) < len(palette), 'Not enough color pairs'
-    for idx, loc in enumerate(locations):
+    for idx, loc in enumerate(sorted(locations)):
         colors[loc] = {'download': palette[idx][0],
                        'upload': palette[idx][1]}
         output[loc] = [o for o in objects if o['source'] == loc]
