@@ -25,7 +25,7 @@ def teardown_reader(exception):
 @app.route('/all')
 def all():
     reader = get_reader()
-    objects = [o for o in reader]
+    objects = [o for o in reader if 'timestamp' in o]
     return graph(objects)
 
 
@@ -35,7 +35,7 @@ def speeds(months=1):
     reader = get_reader()
     now = datetime.now()
     then = timedelta(months * 365 / 12)
-    objects = [o for o in reader if
+    objects = [o for o in reader if 'timestamp' in o and
                now - ts_dt(o['timestamp']) < then]
 
     return graph(objects)
@@ -52,7 +52,7 @@ def interval(start, end):
     if e < s:
         abort(400,
               description='Start of range must be less than or equal to end')
-    objects = [o for o in reader if
+    objects = [o for o in reader if 'timestamp' in o and
                s <= ts_dt(o['timestamp']) and
                e >= ts_dt(o['timestamp'])]
 

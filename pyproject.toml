@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "speeds"
-version = "0.1.2"
+version = "0.1.3"
 description = "A small program for graphing cable modem speeds"
 authors = ["Ben Steinberg <bsteinberg@law.harvard.edu>"]
 license = "GPL-3.0-only"
