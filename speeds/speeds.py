@@ -33,9 +33,10 @@ def all():
 @app.route('/<int:months>')
 def speeds(months=1):
     reader = get_reader()
-    now = datetime.now()
+    now = datetime.utcnow()
     then = timedelta(months * 365 / 12)
     objects = [o for o in reader if 'timestamp' in o and
+               o['timestamp'] and
                now - ts_dt(o['timestamp']) < then]
 
     return graph(objects)
@@ -86,4 +87,4 @@ def graph(objects):
 
 
 def ts_dt(ts):
-    return datetime.strptime(ts[:25], '%Y-%m-%dT%H:%M:%S.%f')
+    return datetime.strptime(ts[:26], '%Y-%m-%dT%H:%M:%S.%f')
