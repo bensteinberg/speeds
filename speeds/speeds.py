@@ -87,4 +87,4 @@ def graph(objects):
 
 
 def ts_dt(ts):
-    return datetime.strptime(ts[:26], '%Y-%m-%dT%H:%M:%S.%f')
+    return datetime.strptime(ts.replace("Z", "")[:26], '%Y-%m-%dT%H:%M:%S.%f')
