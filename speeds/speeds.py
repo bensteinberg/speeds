@@ -65,7 +65,10 @@ def graph(objects):
     locations = set([o['source'] for o in objects])
 
     # assume that the most common server is "the" server
-    targets = [o['server']['name'] for o in objects]
+    try:
+        targets = [o['server']['name'] for o in objects]
+    except KeyError:
+        targets = None
     target = max(set(targets), key=targets.count) if targets else ''
 
     output = {}
