@@ -87,4 +87,8 @@ def graph(objects):
 
 
 def ts_dt(ts):
-    return datetime.strptime(ts.replace("Z", "")[:26], '%Y-%m-%dT%H:%M:%S.%f')
+    try:
+        return datetime.strptime(ts.replace("Z", "")[:26], '%Y-%m-%dT%H:%M:%S.%f')
+    except ValueError:
+        # this could be from speedtest-go
+        return datetime.strptime(ts.replace("Z", "")[:26], '%Y-%m-%d %H:%M:%S.%f')
