@@ -65,10 +65,7 @@ def graph(objects):
     locations = set([o['source'] for o in objects])
 
     # assume that the most common server is "the" server
-    try:
-        targets = [o['server']['name'] for o in objects]
-    except KeyError:
-        targets = None
+    targets = [o['server']['name'] for o in objects]
     target = max(set(targets), key=targets.count) if targets else ''
 
     output = {}
@@ -90,8 +87,4 @@ def graph(objects):
 
 
 def ts_dt(ts):
-    try:
-        return datetime.strptime(ts.replace("Z", "")[:26], '%Y-%m-%dT%H:%M:%S.%f')
-    except ValueError:
-        # this could be from speedtest-go
-        return datetime.strptime(ts.replace("Z", "")[:26], '%Y-%m-%d %H:%M:%S.%f')
+    return datetime.strptime(ts.replace("Z", "")[:26], '%Y-%m-%dT%H:%M:%S.%f')
