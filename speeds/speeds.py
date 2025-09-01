@@ -1,7 +1,7 @@
-from flask import Flask, render_template, g, abort
 import jsonlines
 import os
 from datetime import datetime, timedelta
+from flask import Flask, render_template, g, abort
 
 
 app = Flask(__name__)
@@ -64,10 +64,6 @@ def graph(objects):
     """ Produce output """
     locations = set([o['source'] for o in objects])
 
-    # assume that the most common server is "the" server
-    targets = [o['server']['name'] for o in objects]
-    target = max(set(targets), key=targets.count) if targets else ''
-
     output = {}
     colors = {}
     # we need as many pairs as we have locations; some kind of
@@ -81,10 +77,19 @@ def graph(objects):
     for idx, loc in enumerate(sorted(locations)):
         colors[loc] = {'download': palette[idx][0],
                        'upload': palette[idx][1]}
-        output[loc] = [o for o in objects if o['source'] == loc]
-    return render_template('index.html',
-                           objects=output, colors=colors, target=target)
+        output[loc] = [enhance(o) for o in objects if o['source'] == loc]
+    return render_template('index.html', objects=output, colors=colors)
 
 
 def ts_dt(ts):
-    return datetime.strptime(ts.replace("Z", "")[:26], '%Y-%m-%dT%H:%M:%S.%f')
+    return datetime.strptime(ts.replace("Z", "")[:26], '%Y-%m-%d %H:%M:%S.%f')
+
+
+def enhance(obj):
+    """Convert speeds from bytes to Mbps."""
+    obj.update({
+        "download": round(obj["servers"][0]["dl_speed"] / 1048576, 2),
+        "upload": round(obj["servers"][0]["ul_speed"] /1048576, 2)
+    })
+
+    return obj
