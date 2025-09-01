@@ -88,8 +88,8 @@ def ts_dt(ts):
 def enhance(obj):
     """Convert speeds from bytes to Mbps."""
     obj.update({
-        "download": round(obj["servers"][0]["dl_speed"] / 1048576, 2),
-        "upload": round(obj["servers"][0]["ul_speed"] /1048576, 2)
+        "download": round(obj["servers"][0]["dl_speed"] / 131072, 2),
+        "upload": round(obj["servers"][0]["ul_speed"] / 131072, 2)
     })
 
     return obj
